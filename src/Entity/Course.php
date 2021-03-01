@@ -44,9 +44,15 @@ class Course
      */
     private $open;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class)
+     */
+    private $students;
+
     public function __construct()
     {
         $this->teachers = new ArrayCollection();
+        $this->students = new ArrayCollection();
     }
 
     public function getCreatedBy(): ?User
@@ -117,6 +123,30 @@ class Course
     public function setOpen(bool $open): self
     {
         $this->open = $open;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getStudents(): Collection
+    {
+        return $this->students;
+    }
+
+    public function addStudent(User $student): self
+    {
+        if (!$this->students->contains($student)) {
+            $this->students[] = $student;
+        }
+
+        return $this;
+    }
+
+    public function removeStudent(User $student): self
+    {
+        $this->students->removeElement($student);
 
         return $this;
     }

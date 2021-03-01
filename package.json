@@ -12,6 +12,7 @@
     "license": "UNLICENSED",
     "private": true,
     "scripts": {
+        "run-web-server": "php bin/console server:run",
         "dev-server": "encore dev-server",
         "dev": "encore dev",
         "watch": "encore dev --watch",

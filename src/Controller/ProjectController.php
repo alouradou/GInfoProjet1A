@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,7 +24,12 @@ class ProjectController extends AbstractController
      */
     public function home(): Response
     {
-        return $this->render('project/home.html.twig');
+        $repo = $this->getDoctrine()->getRepository(User::class);
+        $users = $repo->findAll();
+        return $this->render('project/home.html.twig',[
+            'controller_name' => 'ProjectController',
+            'users' => $users
+        ]);
     }
 
 

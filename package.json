@@ -12,7 +12,7 @@
     "license": "UNLICENSED",
     "private": true,
     "scripts": {
-        "run-web-server": "php bin/console server:run",
+        "run-web-server": "php -S localhost:8000 -t public",
         "dev-server": "encore dev-server",
         "dev": "encore dev",
         "watch": "encore dev --watch",

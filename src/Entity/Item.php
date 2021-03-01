@@ -37,6 +37,11 @@ class Item
      */
     private $chapter;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Course::class)
+     */
+    private $course;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -86,6 +91,18 @@ class Item
     public function setChapter(string $chapter): self
     {
         $this->chapter = $chapter;
+
+        return $this;
+    }
+
+    public function getCourse(): ?Course
+    {
+        return $this->course;
+    }
+
+    public function setCourse(?Course $course): self
+    {
+        $this->course = $course;
 
         return $this;
     }

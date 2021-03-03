@@ -70,12 +70,13 @@ class AppFixtures extends Fixture
 //            ->setDescription($faker->word)
 //            ->setName($faker->name)
 //            ->setOrd($faker->randomDigit);
-//        $item2 =  new Item();
-//        $item2->setChapter($faker->word())
-//             ->setCourse($course2)
-//             ->setDescription($faker->word)
-//             ->setName($faker->name)
-//             ->setOrd($faker->randomDigit);
+        $item2 =  new Item();
+        $item2->setChapter($faker->word())
+             ->setCourse($course2)
+             ->setDescription($faker->word)
+             ->setName($faker->name)
+             ->setOrd($faker->randomDigit);
+        $manager->persist($item2);
 
         $manager->flush();
     }

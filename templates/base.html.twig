@@ -3,9 +3,9 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" type="text/css" href="https://bootswatch.com/4/simplex/bootstrap.min.css">
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
+        <link rel="stylesheet" href="{{ asset('build/vendor.css') }}" />
         <link rel="stylesheet" href="{{ asset('build/app.css') }}" />
         {% block page_css %}
         {% endblock %}
@@ -15,8 +15,8 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
               rel="stylesheet">
     </head>
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <body {% block additionnal_body_block %}{% endblock %} class="theme-red {% block additionnal_body_class %}{% endblock %}">
+        {# <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <a class="navbar-brand" href="{{ path('home') }}">Projet claqué d'Arthur</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -43,8 +43,63 @@
                     </li>
                 </ul>
             </div>
+        </nav> #}
+        <nav class="navbar">
+            <div class="container-fluid">
+                <div class="navbar-header">
+{#                    {% if is_granted('ROLE_USER') %}#}
+                        {% block mobile_collapse %}
+                            <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
+                        {% endblock %}
+                        <a href="javascript:void(0);" class="bars"></a>
+{#                    {% endif %}#}
+                    <a class="navbar-brand" href="{{ path('home') }}">Projet claqué d'Arthur</a>
+
+                </div>
+                <div class="collapse navbar-collapse" id="navbar-collapse">
+                    <ul class="nav navbar-nav navbar-right">
+{#                        {% if is_granted('ROLE_USER') %}#}
+                            <li>
+                                <a href="">
+                                    <i class="material-icons">settings</i>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="">
+                                    <i class="material-icons">power_settings_new</i>
+                                </a>
+                            </li>
+{#                        {% endif %}#}
+                    </ul>
+                </div>
+            </div>
         </nav>
-        {% block body %}{% endblock %}
+        <section>
+            <aside id="leftsidebar" class="sidebar">
+                <div class="menu">
+                    <ul class="list">
+                        <li class="header">Menu</li>
+                        <li {% if app.request.pathInfo starts with "/projet_claque" %}class="active"{% endif %}>
+                            <a href="{{ path('projet_claque') }}">
+                                <i class="material-icons">search</i> <span>Projet Claqué</span>
+                            </a>
+                        </li>
+                        <li {% if app.request.pathInfo starts with "/home" %}class="active"{% endif %}>
+                            <a href="{{ path('home') }}" id="link_add">
+                                <i class="material-icons">add</i> <span>Home</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </aside>
+        </section>
+
+        <section class="content">
+            <div class="container-fluid">
+                {% block body %}{% endblock %}
+            </div>
+        </section>
+
 
         <div class="footer">
             <div class="footer-content">
@@ -63,11 +118,10 @@
             {% endfor %}
         </div>
 
-        {% block page_js %}
-        {% endblock %}
         <script src="{{ asset('build/js/vendor.js') }}"></script>
         <script src="{{ asset('build/app.js') }}"></script>
         <script src="{{ asset('build/runtime.js') }}"></script>
         {% block javascripts %}{% endblock %}
+        {% block page_js %}{% endblock %}
     </body>
 </html>

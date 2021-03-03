@@ -16,34 +16,6 @@
               rel="stylesheet">
     </head>
     <body {% block additionnal_body_block %}{% endblock %} class="theme-red" {% block additionnal_body_class %}{% endblock %}">
-        {# <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <a class="navbar-brand" href="{{ path('home') }}">Projet claqué d'Arthur</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarColor01">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('home') }}">Home
-                            <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('projet_claque') }}">Projet Claqué</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/projet_claque/test">Test Page</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/about">À Propos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://drive.google.com/drive/u/0/folders/1q7klryO0WbtECSXboOmN42BWLoT-FzPR">Drive</a>
-                    </li>
-                </ul>
-            </div>
-        </nav> #}
         <nav class="navbar">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -81,13 +53,24 @@
                         <li class="header">Menu</li>
                         <li {% if app.request.pathInfo starts with "/projet_claque" %}class="active"{% endif %}>
                             <a href="{{ path('projet_claque') }}">
-                                <i class="material-icons">search</i> <span>Projet Claqué</span>
+                                <i class="material-icons">home</i> <span>Projet Claqué</span>
                             </a>
                         </li>
-                        <li {% if app.request.pathInfo starts with "/home" %}class="active"{% endif %}>
-                            <a href="{{ path('home') }}" id="link_add">
-                                <i class="material-icons">add</i> <span>Home</span>
+                        <li>
+                            <a href="javascript:void(0)" class="menu-toggle waves-effect waves-block
+                            {# {% if app.request.pathInfo starts with "/utilisateurs" or app.request.pathInfo starts with "/home" %}#}toggled{#{% endif %}#}">
+                                <i class="material-icons">explore</i>
+                                <span>Test des fixtures</span>
                             </a>
+                                <ul class="ml-menu">
+                                    {% for path in [["Home","home","home"],["Utilisateurs","utilisateurs","users"],["Cours","cours","courses"],['Éléments','elements','items']] %}
+                                    <li {% if app.request.pathInfo starts with "/"~path[1] %}class="active"{% endif %}>
+                                        <a href="{{ path(path[2]) }}" id="link_add">
+                                           <span>{{ path[0] }}</span>
+                                        </a>
+                                    </li>
+                                    {% endfor %}
+                                </ul>
                         </li>
                     </ul>
                 </div>

@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% block title %}Liste des cours{% endblock %}
+{% block body %}
+<div class="body-wrapper">
+    <h1>Cours</h1>
+    <p>Cette page est toujours si intéressante n'est-ce pas ?</p>
+    <p>Voilà la liste des cours dispensés par ce cher GInfo</p>
+    <ul>
+        {% for course in courses %}
+            <li>{{ course.name }}, crée par  {{ course.createdBy.firstName }} {{ course.createdBy.lastName }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+
+</div>
+{% endblock %}

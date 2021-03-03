@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+{% block titile %}Liste des utilisateurs{% endblock %}
+{% block body %}
+    <div class="body-wrapper">
+        <h1>Élements</h1>
+        <p>Cette page est on ne peut plus intéressante n'est-ce pas ?</p>
+        <p>Voilà la liste des éléments</p>
+        <ul>
+            {% for item in items %}
+                <li>L'item {{ item.name }} est lié au cours {{ item.course.name }} : {{ item.description }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

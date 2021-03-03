@@ -63,7 +63,7 @@ class ProjectController extends AbstractController
     public function items(): Response {
         $repo = $this->getDoctrine()->getRepository(Item::class);
         $items = $repo->findAll();
-        return $this->render('project/courses.html.twig', [
+        return $this->render('project/items.html.twig', [
             'controller_name' => 'ProjectController',
             'items' => $items
         ]);

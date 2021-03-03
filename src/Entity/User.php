@@ -70,10 +70,16 @@ class User
      */
     private $validations;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Course::class, mappedBy="teachers")
+     */
+    private $courses;
+
 
     public function __construct()
     {
         $this->validations = new ArrayCollection();
+        $this->courses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -190,6 +196,33 @@ class User
             if ($validation->getAuthor() === $this) {
                 $validation->setAuthor(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Course[]
+     */
+    public function getCourses(): Collection
+    {
+        return $this->courses;
+    }
+
+    public function addCourse(Course $course): self
+    {
+        if (!$this->courses->contains($course)) {
+            $this->courses[] = $course;
+            $course->addTeacher($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCourse(Course $course): self
+    {
+        if ($this->courses->removeElement($course)) {
+            $course->removeTeacher($this);
         }
 
         return $this;

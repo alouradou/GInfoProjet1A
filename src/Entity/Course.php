@@ -25,11 +25,6 @@ class Course
     private $createdBy;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class)
-     */
-    private $teachers;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $name;
@@ -45,15 +40,16 @@ class Course
     private $open;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class)
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="courses")
      */
-    private $students;
+    private $teachers;
+
 
     public function __construct()
     {
         $this->teachers = new ArrayCollection();
-        $this->students = new ArrayCollection();
     }
+
 
     public function getCreatedBy(): ?User
     {
@@ -63,30 +59,6 @@ class Course
     public function setCreatedBy(?User $createdBy): self
     {
         $this->createdBy = $createdBy;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|User[]
-     */
-    public function getTeachers(): Collection
-    {
-        return $this->teachers;
-    }
-
-    public function addTeacher(User $teacher): self
-    {
-        if (!$this->teachers->contains($teacher)) {
-            $this->teachers[] = $teacher;
-        }
-
-        return $this;
-    }
-
-    public function removeTeacher(User $teacher): self
-    {
-        $this->teachers->removeElement($teacher);
 
         return $this;
     }
@@ -130,26 +102,25 @@ class Course
     /**
      * @return Collection|User[]
      */
-    public function getStudents(): Collection
+    public function getTeachers(): Collection
     {
-        return $this->students;
+        return $this->teachers;
     }
 
-    public function addStudent(User $student): self
+    public function addTeacher(User $teacher): self
     {
-        if (!$this->students->contains($student)) {
-            $this->students[] = $student;
+        if (!$this->teachers->contains($teacher)) {
+            $this->teachers[] = $teacher;
         }
 
         return $this;
     }
 
-    public function removeStudent(User $student): self
+    public function removeTeacher(User $teacher): self
     {
-        $this->students->removeElement($student);
+        $this->teachers->removeElement($teacher);
 
         return $this;
     }
-
 
 }

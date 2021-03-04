@@ -7,14 +7,15 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
- * @UniqueEntity("email", message="Email already used")
+ * @UniqueEntity("email", message="L'email est déjà utilisé sur ce site")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -41,6 +42,11 @@ class User
      * @Assert\NotBlank
      */
     private $password;
+
+    /**
+     * @Assert\EqualTo(propertyPath="password", message="Les mots de passes tappés sont différents")
+     */
+    private $confirm_password;
 
     /**
      * @ORM\Column(type="string", length=31)
@@ -123,6 +129,16 @@ class User
         return $this;
     }
 
+    public function getConfirmPassword()
+    {
+        return $this->confirm_password;
+    }
+
+    public function setConfirmPassword($confirm_password): void
+    {
+        $this->confirm_password = $confirm_password;
+    }
+
     public function getFirstName(): ?string
     {
         return $this->firstName;
@@ -161,7 +177,10 @@ class User
 
     public function getRoles(): ?array
     {
-        return $this->roles;
+        $roles = $this->roles;
+        $roles[] = 'ROLE_USER'; // guarantee every user at least has ROLE_USER
+
+        return array_unique($roles);
     }
 
     public function setRoles(?array $roles): self
@@ -228,7 +247,14 @@ class User
         return $this;
     }
 
+    public function eraseCredentials()
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
 
-
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+    }
 
 }

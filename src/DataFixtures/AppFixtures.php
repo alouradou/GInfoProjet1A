@@ -8,9 +8,27 @@ use App\Entity\User;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class AppFixtures extends Fixture
 {
+    private $passwordEncoder;
+
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
+
+    public function makeValidUsername($string): string{
+        for ($i=0;$i<strlen($string);$i++) {
+            if ($string[$i] == " "){
+                $string[$i] = "_";
+            }
+        }
+        return strtr($string,'àáâãäçèéêëìíîïñòóôõöùúûüýÿÀÁÂÃÄÇÈÉÊËÌÍÎÏÑÒÓÔÕÖÙÚÛÜÝ',
+            'aaaaaceeeeiiiinooooouuuuyyAAAAACEEEEIIIINOOOOOUUUUY');
+    }
+
     public function load(ObjectManager $manager)
     {
         // $product = new Product();
@@ -23,7 +41,7 @@ class AppFixtures extends Fixture
              ->setLastName("Appleseed")
              ->setEmail("john.appleseed@centrale-marseille.fr")
              ->setPromo(2020)
-             ->setPassword("azerty")
+             ->setPassword($this->passwordEncoder->encodePassword($user,"azerty"))
              ->setUsername("jappleseed");
 
         $manager->persist($user);
@@ -33,19 +51,21 @@ class AppFixtures extends Fixture
             ->setLastName("Cook")
             ->setEmail("tim.cook@centrale-marseille.fr")
             ->setPromo(2020)
-            ->setPassword("azerty")
-            ->setUsername("tcook");
+            ->setPassword($this->passwordEncoder->encodePassword($user,"AppleCupertino$2011"))
+            ->setUsername("tcook")
+        ->setRoles(["root"]);
 
         $manager->persist($user2);
 
-        for ($i=0;$i<4;$i++){
+        for ($i=0;$i<40;$i++){
             $user = new User();
             $user->setFirstName($faker->firstName)
                 ->setLastName($faker->lastName)
-                ->setEmail($user->getFirstName().".".$user->getFirstName()."@centrale-marseille.fr")
                 ->setPromo(2020)
-                ->setPassword("azerty")
-                ->setUsername($user->getFirstName()[0].$user->getLastName());
+                ->setPassword($this->passwordEncoder->encodePassword($user,"azerty"));
+            $username = $this->makeValidUsername($user->getFirstName()[0].$user->getLastName());
+            $user->setUsername(strtolower($username))
+            ->setEmail(strtolower($username)."@centrale-marseille.fr");
             $manager->persist($user);
         }
 

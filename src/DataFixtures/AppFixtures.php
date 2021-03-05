@@ -53,7 +53,7 @@ class AppFixtures extends Fixture
             ->setPromo(2020)
             ->setPassword($this->passwordEncoder->encodePassword($user,"AppleCupertino$2011"))
             ->setUsername("tcook")
-        ->setRoles(["root"]);
+        ->setRoles(["ROLE_ADMIN"]);
 
         $manager->persist($user2);
 

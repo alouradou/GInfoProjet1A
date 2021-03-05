@@ -2,6 +2,10 @@
 {% block body %}
     <div class="body-wrapper">
         <h1>Connexion</h1>
+        {% if error %}
+{#            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div> #}
+            <div class="error-message" style="color: #d9230f;">Nom d'utilisateur ou mot de passe incorrects.</div>
+        {% endif %}
         <form action="{{ path('security_login') }}" method="post">
             <div class="form-group">
                 <input placeholder="Adresse email" required name="_username" type="text" class="form-control">

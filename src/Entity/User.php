@@ -79,13 +79,19 @@ class User implements UserInterface
     /**
      * @ORM\ManyToMany(targetEntity=Course::class, mappedBy="teachers")
      */
-    private $courses;
+    private $coursesTeached;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Course::class, mappedBy="students")
+     */
+    private $coursesFollowed;
 
 
     public function __construct()
     {
         $this->validations = new ArrayCollection();
-        $this->courses = new ArrayCollection();
+        $this->coursesTeached = new ArrayCollection();
+        $this->coursesFollowed = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -223,25 +229,52 @@ class User implements UserInterface
     /**
      * @return Collection|Course[]
      */
-    public function getCourses(): Collection
+    public function getCoursesTeached(): Collection
     {
-        return $this->courses;
+        return $this->coursesTeached;
     }
 
-    public function addCourse(Course $course): self
+    public function addCoursesTeached(Course $coursesTeached): self
     {
-        if (!$this->courses->contains($course)) {
-            $this->courses[] = $course;
-            $course->addTeacher($this);
+        if (!$this->coursesTeached->contains($coursesTeached)) {
+            $this->coursesTeached[] = $coursesTeached;
+            $coursesTeached->addTeacher($this);
         }
 
         return $this;
     }
 
-    public function removeCourse(Course $course): self
+    public function removeCoursesTeached(Course $coursesTeached): self
     {
-        if ($this->courses->removeElement($course)) {
-            $course->removeTeacher($this);
+        if ($this->coursesTeached->removeElement($coursesTeached)) {
+            $coursesTeached->removeTeacher($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Course[]
+     */
+    public function getCoursesFollowed(): Collection
+    {
+        return $this->coursesFollowed;
+    }
+
+    public function addCoursesFollowed(Course $coursesFollowed): self
+    {
+        if (!$this->coursesFollowed->contains($coursesFollowed)) {
+            $this->coursesFollowed[] = $coursesFollowed;
+            $coursesFollowed->addStudent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCoursesFollowed(Course $coursesFollowed): self
+    {
+        if ($this->coursesFollowed->removeElement($coursesFollowed)) {
+            $coursesFollowed->removeStudent($this);
         }
 
         return $this;
@@ -252,9 +285,8 @@ class User implements UserInterface
         // TODO: Implement eraseCredentials() method.
     }
 
-    public function getSalt()
+    public function getSalt(): ?string
     {
         // TODO: Implement getSalt() method.
     }
-
 }

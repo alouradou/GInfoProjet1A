@@ -40,14 +40,21 @@ class Course
     private $open;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="courses")
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="coursesTeached")
      */
     private $teachers;
+
+//    /**
+//     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="coursesFollowed")
+//     */
+//    private $students;
+
 
 
     public function __construct()
     {
         $this->teachers = new ArrayCollection();
+//        $this->students = new ArrayCollection();
     }
 
 
@@ -122,5 +129,28 @@ class Course
 
         return $this;
     }
-
+//
+//    /**
+//     * @return Collection|User[]
+//     */
+//    public function getStudents(): Collection
+//    {
+//        return $this->students;
+//    }
+//
+//    public function addStudent(User $student): self
+//    {
+//        if (!$this->students->contains($student)) {
+//            $this->students[] = $student;
+//        }
+//
+//        return $this;
+//    }
+//
+//    public function removeStudent(User $student): self
+//    {
+//        $this->students->removeElement($student);
+//
+//        return $this;
+//    }
 }

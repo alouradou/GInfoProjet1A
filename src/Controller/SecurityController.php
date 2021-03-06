@@ -93,8 +93,9 @@ class SecurityController extends AbstractController
                     $user->setUsername($username);
                     $user->setPassword(sha1(uniqid()));
                     $user->setEmail($data['email']);
-                    $user->setLastName($data['nom']);
+                    $user->setLastName(ucwords(strtolower($data['nom'])));
                     $user->setFirstName($data['prenom']);
+                    $user->setRoles(["ROLE_USER"]); // Attribution du rôle par défaut
 
 
                     $manager->persist($user);

@@ -1,4 +1,17 @@
 {% extends 'base.html.twig' %}
+
+{% block page_css %}
+    <style>
+        .btn-my {
+            background-color: #3f51b5;
+            color: white;
+        }
+        .btn-my:hover {
+            color: white;
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
     <div class="body-wrapper">
         <h1>Connexion</h1>
@@ -7,14 +20,15 @@
             <div class="error-message" style="color: #d9230f;">Nom d'utilisateur ou mot de passe incorrects.</div>
         {% endif %}
         <form action="{{ path('security_login') }}" method="post">
-            <div class="form-group">
+            <div class="form-group form-field">
                 <input placeholder="Adresse email" required name="_username" type="text" class="form-control">
             </div>
-            <div class="form-group">
+            <div class="form-group form-field">
                 <input placeholder="Mot de passe" required name="_password" type="password" class="form-control">
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-success">Se connecter</button>
+                <a class="btn btn-my" href="{{ path('security_my_login') }}">Se connecter avec MyCentraleAssos</a>
             </div>
         </form>
     </div>

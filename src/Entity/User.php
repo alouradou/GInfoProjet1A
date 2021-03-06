@@ -61,8 +61,7 @@ class User implements UserInterface
     private $lastName;
 
     /**
-     * @ORM\Column(type="integer")
-     * @Assert\NotBlank
+     * @ORM\Column(type="integer", nullable=true)
      */
     private $promo;
 

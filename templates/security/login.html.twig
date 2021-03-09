@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %} Connexion {% endblock %}
+
 {% block page_css %}
     <style>
         .btn-my {
@@ -8,6 +10,18 @@
         }
         .btn-my:hover {
             color: white;
+        }
+        .input-group-addon {
+            border: none;
+            background-color: transparent;
+            padding-left: 0;
+            font-weight: 700;
+        }
+        .form-group {
+            display: table !important;
+        }
+        .btn {
+            margin: 0 20px 0 0 !important;
         }
     </style>
 {% endblock %}
@@ -20,13 +34,28 @@
             <div class="error-message" style="color: #d9230f;">Nom d'utilisateur ou mot de passe incorrects.</div>
         {% endif %}
         <form action="{{ path('security_login') }}" method="post">
-            <div class="form-group form-field">
-                <input placeholder="Adresse email" required name="_username" type="text" class="form-control">
+            <div class="form-group form-float form-field">
+                <span class="input-group-addon">
+                    <i class="material-icons">person</i>
+                </span>
+                <div class="form-line">
+                    <input required name="_username" type="text" class="form-control">
+                    <label class="control-label form-label" required>Adresse email</label>
+                </div>
             </div>
-            <div class="form-group form-field">
-                <input placeholder="Mot de passe" required name="_password" type="password" class="form-control">
+            <div class="form-group form-float form-field">
+                <span class="input-group-addon">
+                    <i class="material-icons">password</i>
+                </span>
+                <div class="form-line">
+                <input required name="_password" type="password" class="form-control">
+                    <label class="control-label form-label" required>Mot de passe</label>
+                </div>
             </div>
             <div class="form-group">
+                <span class="input-group-addon" style="visibility: hidden;">
+                    <i class="material-icons">person</i>
+                </span>
                 <button type="submit" class="btn btn-success">Se connecter</button>
                 <a class="btn btn-my" href="{{ path('security_my_login') }}">Se connecter avec MyCentraleAssos</a>
             </div>

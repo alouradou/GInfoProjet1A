@@ -9,6 +9,7 @@ use phpDocumentor\Reflection\Types\True_;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class ProjectController extends AbstractController
 {
@@ -23,18 +24,22 @@ class ProjectController extends AbstractController
 
     /**
      * @Route("/home", name="home")
+     * @IsGranted("ROLE_USER")
      */
     public function home(): Response{
         $repo = $this->getDoctrine()->getRepository(User::class);
         $users = $repo->findAll();
+        $current_user = $this->getUser();
         return $this->render('project/home.html.twig',[
             'controller_name' => 'ProjectController',
-            'users' => $users
+            'users' => $users,
+            'current_user' => $current_user
         ]);
     }
 
     /**
      * @Route("/utilisateurs", name="users")
+     * @IsGranted("ROLE_USER")
      */
     public function users(): Response {
         $repo = $this->getDoctrine()->getRepository(User::class);
@@ -47,6 +52,7 @@ class ProjectController extends AbstractController
 
     /**
      * @Route("/cours", name="courses")
+     * @IsGranted("ROLE_USER")
      */
     public function courses(): Response {
         $repo = $this->getDoctrine()->getRepository(Course::class);
@@ -59,6 +65,7 @@ class ProjectController extends AbstractController
 
     /**
      * @Route("/elements", name="items")
+     * @IsGranted("ROLE_USER")
      */
     public function items(): Response {
         $repo = $this->getDoctrine()->getRepository(Item::class);

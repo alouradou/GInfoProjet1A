@@ -1,21 +1,22 @@
 {% extends 'base.html.twig' %}
-{% block title %} Page d'accueil {% endblock %}
+{% block title %} Inscription {% endblock %}
 {% block body %}
     <div class="body-wrapper">
         <h1>Inscription</h1>
-        <p>{{ form_start(form) }}
-            {{ form_row(form.username, {'label': 'Nom d\'utilisateur','attr':{'placeholder':'Nom d\'utilisateur'}}) }}
-            {{ form_row(form.email, {'label': 'Adresse email','attr':{'placeholder':'Adresse email'}}) }}
-            {{ form_row(form.password, {'label': 'Mot de passe','attr':{'placeholder':'Mot de passe'}}) }}
-            {{ form_row(form.confirm_password, {'label': 'Confirmer le mot de passe','attr':{'placeholder':'Mot de passe'}}) }}
+        {% form_theme form 'bootstrap_3_layout.html.twig' %}
+            {{ form_start(form) }}
+            {{ form_row(form.username, {'label': 'Nom d\'utilisateur','attr':{}}) }}
+            {{ form_row(form.email, {'label': 'Adresse email','attr':{}}) }}
+            {{ form_row(form.password, {'label': 'Mot de passe','attr':{'pattern':'(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}', 'title':'Le mot de passe doit faire au moins 8 caractères et contenir au moins une majuscule, une minuscule et un chiffre.'}}) }}
+            {{ form_row(form.confirm_password, {'label': 'Confirmer le mot de passe','attr':{}}) }}
             <br><h4>- Informations personnelles -</h4>
             <p>Vous pouvez lire notre <a href="#">politique de confidentialité</a> qui n'est bien sûr pas écrite. Les données de ce site sont soumises au RGPD mais son respect ne sera assuré que par la parole sur l'honneur de son créateur, qui n'en a évidemment plus.</p>
-            {{ form_row(form.firstName, {'label': 'Prénom','attr':{'placeholder':'Prénom'}}) }}
-            {{ form_row(form.lastName, {'label': 'Nom','attr':{'placeholder':'Nom'}}) }}
+            {{ form_row(form.firstName, {'label': 'Prénom','attr':{}}) }}
+            {{ form_row(form.lastName, {'label': 'Nom','attr':{}}) }}
             {{ form_row(form.promo, {'label': 'Promo','attr':{'value':'2020'}}) }}
             <button type="submit" class="btn btn-success">Confirmer l'inscription</button>
             {{ form_end(form) }}
             <br><br>
-        </p>
+
     </div>
 {% endblock %}

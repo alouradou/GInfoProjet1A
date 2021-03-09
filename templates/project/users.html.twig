@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
 {% block titile %}Liste des utilisateurs{% endblock %}
+{% block page_css %}
+    <style>
+        .material-icons {
+            vertical-align: sub !important;
+        }
+    </style>
+{% endblock %}
 {% block body %}
     <div class="body-wrapper">
         <h1>Utilisateurs</h1>
@@ -7,7 +14,7 @@
         <p>Voilà la liste des utilisateurs de ce site</p>
         <ul>
             {% for user in users %}
-                <li>{{ user.firstName }} {{ user.lastName }} - <a href="http://{{ user.username }}.perso.centrale-marseille.fr/">Site Perso</a></li>
+                <li>{{ user.firstName }} {{ user.lastName }} - <a href="http://{{ user.username }}.perso.centrale-marseille.fr/">Site Perso <i class="material-icons">link</i></a></li>
             {% endfor %}
         </ul>
     </div>

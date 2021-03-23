@@ -46,14 +46,23 @@ class AppFixtures extends Fixture
 
         $manager->persist($user);
 
+        $course2 =  new Course();
         $user2 = new User();
+
+        $course2->setCreatedBy($user2)
+            ->setName("Mon premier cours de Symfony")
+            ->setActive(true)
+            ->setOpen(false);
+        $manager->persist($course2);
+
         $user2->setFirstName("Tim")
             ->setLastName("Cook")
             ->setEmail("tim.cook@centrale-marseille.fr")
             ->setPromo(2020)
             ->setPassword($this->passwordEncoder->encodePassword($user,"AppleCupertino$2011"))
             ->setUsername("tcook")
-        ->setRoles(["ROLE_ADMIN"]);
+            ->setRoles(["ROLE_ADMIN"])
+            ->addCoursesFollowed($course2);
 
         $manager->persist($user2);
 
@@ -65,16 +74,11 @@ class AppFixtures extends Fixture
                 ->setPassword($this->passwordEncoder->encodePassword($user,"azerty"));
             $username = $this->makeValidUsername($user->getFirstName()[0].$user->getLastName());
             $user->setUsername(strtolower($username))
-            ->setEmail(strtolower($username)."@centrale-marseille.fr");
+                ->setEmail(strtolower($username)."@centrale-marseille.fr");
             $manager->persist($user);
         }
 
-        $course2 =  new Course();
-        $course2->setCreatedBy($user2)
-            ->setName("Mon premier cours de Symfony")
-            ->setActive(true)
-            ->setOpen(false);
-        $manager->persist($course2);
+
         for ($i=0;$i<2;$i++){
             $course =  new Course();
             $course->setCreatedBy($user)

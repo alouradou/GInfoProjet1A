@@ -60,6 +60,13 @@ class Course
         $this->students = new ArrayCollection();
     }
 
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     public function getCreatedBy(): ?User
     {

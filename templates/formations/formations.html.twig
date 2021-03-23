@@ -1,0 +1,141 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les formations{% endblock %}
+
+{% block page_css %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+    <style>
+        .table-hover > tbody > tr > td {
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="body-wrapper">
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div class="card">
+                <div class="header">
+                    <h2>Formations proposées</h2>
+                </div>
+                <div class="body table-responsive">
+                    <table class="table table-hover" id="table_1">
+                        <thead>
+                        <tr>
+                            <th>Nom de la formation</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            {% for course in courses %}
+                                {% if course not in current_user.coursesFollowed %}
+                                    <tr>
+                                        <td data-id="{{ course.id }}" data-toggle="modal" data-target="#modal{{ course.id }}">{{ course.name }}</td>
+                                    </tr>
+                                {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <div class="card">
+                <div class="header">
+                    <h2>Inscriptions</h2>
+                </div>
+                <div class="body table-responsive">
+                    <table class="table table-hover" id="table_2">
+                        <thead>
+                            <tr>
+                                <th>Nom de la formation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for course in current_user.coursesFollowed %}
+                                <tr>
+                                    <td data-id="{{ course.id }}" data-toggle="modal" data-target="#modal{{ course.id }}">{{ course.name }}</td>
+                                </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% for course in courses %}
+        <div class="modal fade" id="modal{{ course.id }}" tabindex="-1" role="dialog" aria-labelledby="myModal" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">{{ course.name }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Bienvenue dans le Modal du cours d'id {{ course.id }} !
+                        {% if course.active %}
+                            Le cours est ouvert
+                        {% else %}
+                            Le cours est fermé
+                        {% endif %}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                        {% if course in current_user.coursesFollowed %}
+                            <a type="submit" class="btn btn-danger" href="http://localhost:8000/course/{{ course.id }}/unsubscribe">Se désinscrire</a>
+                        {% else %}
+                            <a type="submit" class="btn btn-success" href="http://localhost:8000/course/{{ course.id }}/subscribe">S'inscrire</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}
+
+{% block page_js %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+{#    <script> src="https://unpkg.com/axios/dist/axios.min.js"</script>#}
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready( function () {
+            $('#table_1').DataTable({
+                "language": {
+                    "lengthMenu": "",
+                    "search": "Rechercher : ",
+                    "zeroRecords": "Pas de formation disponible",
+                    "info": "_PAGE_/_PAGES_",
+                    "infoEmpty": "0",
+                    "infoFiltered": "(parmi _MAX_ formations)",
+                    "paginate": {
+                        "first":      "Prem.",
+                        "last":       "Dern.",
+                        "next":       "Préc.",
+                        "previous":   "Suiv."
+                    }
+                },
+                responsive: true
+            });
+            $('#table_2').DataTable({
+                "language": {
+                    "lengthMenu": "",
+                    "search": "Rechercher : ",
+                    "zeroRecords": "Vous n'êtes inscrit dans aucune formation pour le moment",
+                    "info": "_PAGE_/_PAGES_",
+                    "infoEmpty": "0",
+                    "infoFiltered": "(parmi _MAX_ formations)",
+                    "paginate": {
+                        "first":      "Prem.",
+                        "last":       "Dern.",
+                        "next":       "Préc.",
+                        "previous":   "Suiv."
+                    }
+                }
+            });
+        } );
+    </script>
+{% endblock %}

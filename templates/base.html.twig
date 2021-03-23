@@ -71,15 +71,15 @@
                                 <i class="material-icons">explore</i>
                                 <span>Test des fixtures</span>
                             </a>
-                                <ul class="ml-menu">
-                                    {% for path in [["Home","home","home"],["Utilisateurs","utilisateurs","users"],["Cours","cours","courses"],['Éléments','elements','items']] %}
+                            <ul class="ml-menu">
+                                {% for path in [["Home","home","home"],["Utilisateurs","utilisateurs","users"],["Cours","cours","courses"],['Éléments','elements','items']] %}
                                     <li {% if app.request.pathInfo starts with "/"~path[1] %}class="active"{% endif %}>
                                         <a href="{{ path(path[2]) }}" id="link_add">
                                            <span>{{ path[0] }}</span>
                                         </a>
                                     </li>
-                                    {% endfor %}
-                                </ul>
+                                {% endfor %}
+                            </ul>
                         </li>
                         <li>
                             <a href="javascript:void(0)" class="menu-toggle waves-effect waves-block">
@@ -106,6 +106,19 @@
                                     <a href="{{ path('admin') }}">
                                         <i class="material-icons">lock_outline</i>
                                         <span>Pannel d'admin</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" class="menu-toggle waves-effect waves-block">
+                                <i class="material-icons">dashboard</i>
+                                <span>Les vraies parties du projet</span>
+                            </a>
+                            <ul class="ml-menu">
+                                <li>
+                                    <a>
+                                        <span>Les formations</span>
                                     </a>
                                 </li>
                             </ul>

@@ -1,4 +1,4 @@
-# GInfoProjetClaque
+# GInfoProjet1A
 
 ## Contexte
 L'idée du projet de première année est d'initialiser un site web en Symfony 4.4 pour apprendre à développer par la suite les différents projets du [GInfo](https://ginfo.asso.centrale-marseille.fr/) - Groupe Informatique - association de l'École centrale de Marseille.
